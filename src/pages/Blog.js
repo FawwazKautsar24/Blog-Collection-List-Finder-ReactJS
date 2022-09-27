@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Blog(){
     const [articles, setArticles] = useState([]);
@@ -25,7 +26,12 @@ export default function Blog(){
                 ) : (
                 <div>
                     {articles.map((article) => {
-                        return <article key={article.id}>{article.title}</article>;
+                        return (
+                            <article key={article.id}>
+                                <h2><Link to={`/blog/${article.id}`}>{article.title}</Link></h2>
+                                <time>{new Date(article.publishedAt).toLocaleDateString()}</time>
+                            </article>
+                        );
                     })}
                 </div>
             )}
