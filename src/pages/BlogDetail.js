@@ -5,10 +5,16 @@ export default function BlogDetail(){
     const params = useParams();
     const [article, setArticle] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
 
     useEffect(() => {
         async function getArticle(){
             const request = await fetch(`https://api.spaceflightnewsapi.net/v3/articles/${params.id}`);
+
+            if(!request.ok){
+                return setNotFound(true);
+            }
+            
             const response = await request.json();
 
             setArticle(response);
@@ -16,6 +22,10 @@ export default function BlogDetail(){
         }
         getArticle();
     }, [params]);
+
+    if(notFound){
+        return <h1>Artikel Tidak Ditemukan :(</h1>;
+    }
 
     return (
         <section>
